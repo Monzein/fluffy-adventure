@@ -32,6 +32,11 @@ namespace jeu.Modele
         {
             get { return largeur; }
         }
+        private List<Personnage> personnages;
+        public List<Personnage> Personnages
+        {
+            get { return personnages; }
+        }
 
         /* Constructeurs */
         public Grille(int largeur, int hauteur, int seed, int[,] tab)
@@ -45,7 +50,8 @@ namespace jeu.Modele
             else
                 this.hauteur = HAUTEUR;
             this.seed = seed;
-            this.cellules=new Cellule[hauteur,largeur];
+            this.cellules = new Cellule[hauteur, largeur];
+            this.personnages = new List<Personnage>();
             Init(tab);
         }
 
@@ -60,11 +66,21 @@ namespace jeu.Modele
                 }
             }
         }
-    
+
         /* Accesseurs */
         public String GetTerrainName(int x, int y)
         {
             return cellules[x, y].Type.Nom;
+        }
+
+        /* Ajout de personnage */
+        public void add_Joueur(int x, int y)
+        {
+            if (x > 0 && x < largeur && y > 0 && y < hauteur)
+            {
+                Joueur j = new Modele.Joueur(x, y);
+                this.personnages.Add(j);
+            }
         }
     }
 }

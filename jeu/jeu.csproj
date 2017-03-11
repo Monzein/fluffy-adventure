@@ -49,6 +49,7 @@
     <None Include="Properties\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\personnages\joueur.png" />
     <Content Include="images\terrains\foret.png" />
     <Content Include="images\terrains\montagne.png" />
     <Content Include="images\terrains\ocean.png" />
@@ -71,7 +72,11 @@
     </Compile>
     <Compile Include="Modele\Cellule.cs" />
     <Compile Include="Modele\Createur_grille.cs" />
+    <Compile Include="Modele\Deplacement.cs" />
+    <Compile Include="Modele\Direction.cs" />
     <Compile Include="Modele\Grille.cs" />
+    <Compile Include="Modele\Joueur.cs" />
+    <Compile Include="Modele\Personnage.cs" />
     <Compile Include="Modele\Ressource.cs" />
     <Compile Include="Modele\RessourcesDico.cs" />
     <Compile Include="Modele\Terrain.cs" />

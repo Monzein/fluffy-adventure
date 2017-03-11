@@ -17,7 +17,7 @@ namespace jeu.Jeu
         private Image[,] plateau;
         private int HAUTEUR = 22*1, LARGEUR = 46*1;
         private int WIDTH_IMG = 25, HEIGHT_IMG = 25;
-        private int SPACE_TILE = 2;
+        private int SPACE_TILE = 1;
         private int SEED = 0;
 
         public EcranJeu()
@@ -46,6 +46,7 @@ namespace jeu.Jeu
         {
             Graphics g = e.Graphics;
 
+            // Plateau
             for (int i = 0; i < HAUTEUR; i++)
             {
                 for (int j = 0; j < LARGEUR; j++)
@@ -61,6 +62,17 @@ namespace jeu.Jeu
 
                 }
             }
+
+            // Personnage
+            for(int i=0; i<modele.Personnages.Count; i++)
+            {
+                Personnage p = modele.Personnages[i];
+                Console.WriteLine("../../images/personnages/" + p.Nom + ".png");
+                
+                Image original = new Bitmap("../../images/personnages/" + p.Nom + ".png");
+                Image image = new Bitmap(original, WIDTH_IMG, HEIGHT_IMG);
+                Point pt = new Point(2 * SPACE_TILE + p.X * (image.Width + SPACE_TILE), 2 * SPACE_TILE + p.Y * (image.Height + SPACE_TILE));
+            }
         }
 
         private void Tile_size()
@@ -70,11 +82,6 @@ namespace jeu.Jeu
 
             WIDTH_IMG = Math.Min(WIDTH_IMG, HEIGHT_IMG);
             HEIGHT_IMG = WIDTH_IMG;
-        }
-
-        private void EcranJeu_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

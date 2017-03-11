@@ -20,6 +20,7 @@ namespace jeu.Modele
                 rayon_foret = (int)(rayon_terre*0.5),
                 rayon_montagne = (int)(rayon_terre * 0.2);
             int ilots = 25;
+            int x_j = 0, y_j = 0;
 
             // Initialisation du random
             Random r;
@@ -42,7 +43,6 @@ namespace jeu.Modele
                 // Point de départ de la terre
                 int x = (int)(r.NextDouble() * (largeur - 2 * rayon_terre) + rayon_terre);
                 int y = (int)(r.NextDouble() * (hauteur - 2 * rayon_terre) + rayon_terre);
-                Console.WriteLine("x " + x + " y " + y);
 
                 // Création de la terre
                 for (int i = y - rayon_terre; i < y + rayon_terre; i++)
@@ -65,7 +65,6 @@ namespace jeu.Modele
             }
 
             // Création des plages
-            // Création de la terre
             for (int i = 1; i < hauteur-1; i++)
             {
                 for (int j = 1; j < largeur-1; j++)
@@ -80,8 +79,13 @@ namespace jeu.Modele
                 }
             }
 
-                    // Construction de la grille selon le tableau
-                    Grille grille = new Modele.Grille(largeur, hauteur, seed, tab);
+            // Ajout du joueur
+            x_j = (int)(r.NextDouble() * (largeur - 2 * rayon_terre) + (2*rayon_terre));
+            y_j = (int)(r.NextDouble() * (hauteur - 2 * rayon_terre) + (2*rayon_terre));
+
+            // Construction de la grille selon le tableau
+            Grille grille = new Modele.Grille(largeur, hauteur, seed, tab);
+            grille.add_Joueur(x_j, y_j);
             return grille;
         }
 
