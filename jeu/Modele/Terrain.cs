@@ -9,12 +9,16 @@ namespace jeu.Modele
     class Terrain
     {
         /* TERRAIN */
+        public static Terrain OCEAN = new Terrain("ocean", 12, RessourcesDico.Ocean_dispo(),
+            RessourcesDico.Ocean_possible());
         public static Terrain PLAINE = new Terrain("plaine", 1, RessourcesDico.Plaine_dispo(),
             RessourcesDico.Plaine_possible());
         public static Terrain FORET = new Terrain("foret", 2, RessourcesDico.Foret_dispo(),
             RessourcesDico.Foret_possible());
-        public static Terrain OCEAN = new Terrain("ocean", 12, RessourcesDico.Ocean_dispo(),
-            RessourcesDico.Ocean_possible());
+        public static Terrain MONTAGNE = new Terrain("montagne", 2, RessourcesDico.Montagne_dispo(),
+            RessourcesDico.Montagne_possible());
+        public static Terrain PLAGE = new Terrain("plage", 2, RessourcesDico.Plage_dispo(),
+            RessourcesDico.Plage_possible());
 
         /* Constantes */
         private int TRANCHE_CONSTANTE = 10;
@@ -68,13 +72,8 @@ namespace jeu.Modele
         }
 
         /* Génère le dictionnaire des ressources et de leur montant pour une cellule */
-        public IDictionary<Ressource, int> GenererDictionnaire(int seed)
+        public IDictionary<Ressource, int> GenererDictionnaire(Random r)
         {
-            Random r;
-            if(seed==0)
-                r = new Random();
-            else
-                r = new Random(seed);
             IDictionary<Ressource, int> result = new Dictionary<Ressource, int>();
             foreach (KeyValuePair<Ressource, int> p in ressources_disponnible)
             {
@@ -94,7 +93,20 @@ namespace jeu.Modele
         }
         public IDictionary<Ressource, int> GenererDictionnaire()
         {
-            return GenererDictionnaire(0);
+            return GenererDictionnaire(null);
+        }
+
+        public static Terrain get_Terrain(int i)
+        {
+            switch (i)
+            {
+                case 0: return OCEAN;
+                case 1: return PLAINE;
+                case 2:return FORET;
+                case 3: return MONTAGNE;
+                case 4: return PLAGE;
+                default: return FORET;
+            }
         }
     }
 }

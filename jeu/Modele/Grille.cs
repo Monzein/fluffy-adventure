@@ -34,7 +34,7 @@ namespace jeu.Modele
         }
 
         /* Constructeurs */
-        public Grille(int largeur, int hauteur, int seed)
+        public Grille(int largeur, int hauteur, int seed, int[,] tab)
         {
             if (largeur > 0 && largeur < MAX)
                 this.largeur = largeur;
@@ -45,18 +45,18 @@ namespace jeu.Modele
             else
                 this.hauteur = HAUTEUR;
             this.seed = seed;
-            this.cellules=new Cellule[largeur,hauteur];
-            Init();
+            this.cellules=new Cellule[hauteur,largeur];
+            Init(tab);
         }
 
         /* Initialisation */
-        private void Init()
+        private void Init(int[,] tab)
         {
-            for (int i = 0; i < largeur; i++)
+            for (int i = 0; i < hauteur; i++)
             {
-                for (int j = 0; j < hauteur; j++)
+                for (int j = 0; j < largeur; j++)
                 {
-                    cellules[i, j] = new Cellule(Terrain.OCEAN);
+                    cellules[i, j] = new Cellule(Terrain.get_Terrain(tab[i, j]));
                 }
             }
         }

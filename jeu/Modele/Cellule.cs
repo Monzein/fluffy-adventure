@@ -13,6 +13,7 @@ namespace jeu.Modele
         public Terrain Type
         {
             get { return type; }
+            set { type = Type; }
         }
         private IDictionary<Ressource, int> ressources;
         public IDictionary<Ressource, int> Ressources
@@ -23,12 +24,17 @@ namespace jeu.Modele
         public Cellule(Terrain type)
         {
             this.type = type;
-            this.ressources = type.GenererDictionnaire();
+            this.ressources = null;
         }
         public Cellule(Terrain type, int seed)
         {
             this.type = type;
-            this.ressources = type.GenererDictionnaire(seed);
+            this.ressources = null;
+        }
+
+        public void init(Random r)
+        {
+            this.ressources = type.GenererDictionnaire(r);
         }
     }
 }
