@@ -1,1 +1,1 @@
-Licence Creative Commons : CC-BY-NC
+Licence Creative Commons - Attribution - Noncommercial : CC-BY-NC
