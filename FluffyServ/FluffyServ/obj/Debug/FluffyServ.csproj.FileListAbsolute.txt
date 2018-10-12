@@ -1,0 +1,11 @@
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\FluffyServ.exe.config
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\FluffyServ.exe
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\FluffyServ.pdb
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\obj\Debug\FluffyServ.csprojResolveAssemblyReference.cache
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\obj\Debug\FluffyServ.csproj.CoreCompileInputs.cache
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\obj\Debug\FluffyServ.csproj.CopyComplete
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\obj\Debug\FluffyServ.exe
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\obj\Debug\FluffyServ.pdb
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\Fleck.dll
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\Newtonsoft.Json.dll
+C:\Users\tmonzein\Documents\perso\FluffyServ\FluffyServ\bin\Debug\Newtonsoft.Json.xml

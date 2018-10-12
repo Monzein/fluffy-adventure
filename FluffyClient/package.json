@@ -1,0 +1,19 @@
+{
+  "name": "fluffyclient",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf static\\css && mkdir -p static\\css",
+    "start": "node server"
+  },
+  "author": "Thomas Monzein",
+  "license": "ISC",
+  "dependencies": {
+    "consolidate": "^0.15.1",
+    "express": "^4.16.3",
+    "mustache": "^3.0.0",
+    "ws": "^6.0.0"
+  }
+}

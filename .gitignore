@@ -1,5 +1,4 @@
-jeu.sln
-jeu.v12.suo
-.git
-jeu/bin/
-jeu/obj/
+/packages
+/bin
+/obj
+/node_modules

@@ -1,0 +1,23 @@
+﻿.ocean {
+    background-color: blue;
+}
+
+.plaine {
+    background-color:lawngreen;
+}
+
+.foret {
+    background-color: forestgreen;
+}
+
+.montagne {
+    background-color: saddlebrown;
+}
+
+.plage {
+    background-color: lightgoldenrodyellow;
+}
+
+.void {
+    background-color: black;
+}
