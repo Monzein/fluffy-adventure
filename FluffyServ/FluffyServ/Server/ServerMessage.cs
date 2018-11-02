@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluffyServ.Server
 {
-    class ServerMessage
+    public class ServerMessage
     {
         private int id;
         private string command;

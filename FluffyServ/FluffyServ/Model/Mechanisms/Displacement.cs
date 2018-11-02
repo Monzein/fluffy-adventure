@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FluffyServ.Model
+﻿namespace FluffyServ.Model.Mechanisms
 {
-    class Displacement
+    public class Displacement
     {
+        public static Displacement NONE = new Displacement("none");
         public static Displacement ALL = new Displacement("all");
         public static Displacement TERRESTRIAL = new Displacement("terrestre");
         public static Displacement MARITIME = new Displacement("maritime");
@@ -25,7 +21,7 @@ namespace FluffyServ.Model
         }
 
         /* Méthodes */
-        public bool CanMone(Terrain t)
+        public bool CanMove(Terrain t)
         {
             if(t == Terrain.VOID)
             {
@@ -33,6 +29,10 @@ namespace FluffyServ.Model
             }
             if (this == ALL) { 
                 return true;
+            }
+            else if(this == NONE)
+            {
+                return false;
             }
             else if(this == MARITIME)
             {

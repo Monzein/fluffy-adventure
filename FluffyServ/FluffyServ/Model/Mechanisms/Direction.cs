@@ -1,6 +1,6 @@
-﻿namespace FluffyServ.Model
+﻿namespace FluffyServ.Model.Mechanisms
 {
-    enum Direction
+    public enum Direction
     {
         NORD,
         SUD,

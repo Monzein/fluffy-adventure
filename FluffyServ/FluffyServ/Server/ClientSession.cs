@@ -1,28 +1,85 @@
 ﻿using Fleck;
 using FluffyServ.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluffyServ.Server
 {
-    class ClientSession
+    public class ClientSession
     {
         private static int idCount = 0;
 
         private int id;
-        private Player joueur;
+        private Player sessionPlayer;
+        private bool action = true;
+        private bool isBattle = false;
+        private bool isLoose = false;
 
         private static int IdCount { get => idCount++; }
         public int Id { get => id; }
-        internal Player Joueur { get => joueur; set => joueur = value; }
+        internal Player SessionPlayer { get => sessionPlayer; set => sessionPlayer = value; }
+        public bool IsLoose { get => isLoose; }
 
         public ClientSession(Grid grille)
         {
             id = IdCount;
-            Joueur = grille.AddJoueur(id);
+            SessionPlayer = grille.AddJoueur(id);
+            action = true;
+        }
+
+        internal bool DoAction()
+        {
+            if (sessionPlayer.IsInBattle())
+            {
+                return false;
+            }
+            if (action)
+            {
+                action = false;
+                return true;
+            }
+            return false;
+        }
+
+        internal bool DoActionBattle()
+        {
+            if (!sessionPlayer.IsInBattle())
+            {
+                return false;
+            }
+            if (action)
+            {
+                action = false;
+                return true;
+            }
+            return false;
+        }
+
+        internal bool DoMessageBattle()
+        {
+            if (!sessionPlayer.IsInBattle())
+            {
+                if (isBattle)
+                {
+                    isBattle = false;
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                isBattle = true;
+                return true;
+            }
+        }
+
+        internal bool ResetAction()
+        {
+            action = true;
+            if (sessionPlayer.Health == 0)
+            {
+                isLoose = true;
+                return false;
+            }
+            return true;
         }
     }
 }

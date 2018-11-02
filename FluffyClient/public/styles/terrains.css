@@ -1,9 +1,11 @@
-﻿.ocean {
+﻿/* Terrains */
+
+.ocean {
     background-color: blue;
 }
 
 .plaine {
-    background-color:lawngreen;
+    background-color: lawngreen;
 }
 
 .foret {
@@ -16,6 +18,10 @@
 
 .plage {
     background-color: lightgoldenrodyellow;
+}
+
+.desolation {
+    background-color: lightsalmon;
 }
 
 .void {

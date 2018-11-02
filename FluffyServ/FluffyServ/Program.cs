@@ -16,6 +16,7 @@ namespace FluffyServ
 
             Console.WriteLine("Waiting for a key to stop");
             Console.ReadKey();
+            serveur.StopServ();
         }
 
         
