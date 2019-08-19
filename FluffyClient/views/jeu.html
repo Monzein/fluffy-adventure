@@ -51,14 +51,27 @@
         <div class="modal fade" id="ModalInventory" role="dialog">
             <div class="modal-dialog">
 
-                <!-- Modal content-->
+                <!-- Modal inventory-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Inventaire</h4>
                     </div>
-                    <div class="modal-body" id="inventory">
+                    <div class="modal-body">
+                        <div>
+                            <div class="half-container" style="text-align:center">
+                                Masse: <span id="mass"></span>
+                            </div>
+                            <div class="half-container" style="text-align:center">
+                                Espace: <span id="space"></span>
+                            </div>
+                        </div>
+                        <div id="inventory" class="half-container container-borderd" style="">
 
+                        </div>
+                        <div id="equipement" class="half-container container-borderd" style="">
+
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -109,17 +122,23 @@
                         <h4 class="modal-title">Combat</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="attacker" class="battle" style="float:left">
-                            <p>Joueur</p>
-                            <p>Vie</p>
-                            <p>Attaque</p>
-                            <p>Defense</p>
+                        <div>
+                            <div id="attacker" class="battle" style="float:left">
+                                <p>Joueur</p>
+                                <p>Vie</p>
+                                <p>Attaque</p>
+                                <p>Defense</p>
+                            </div>
+                            <div id="defender" class="battle" style="float:right">
+                                <p>Joueur</p>
+                                <p>Vie</p>
+                                <p>Attaque</p>
+                                <p>Defense</p>
+                            </div>
                         </div>
-                        <div id="defender" class="battle" style="float:right">
-                            <p>Joueur</p>
-                            <p>Vie</p>
-                            <p>Attaque</p>
-                            <p>Defense</p>
+                        <div>
+                            <p id="firstBattleMessage">first</p>
+                            <p id="secondBattleMessage">second</p>
                         </div>
                     </div>
                     <div class="modal-footer">

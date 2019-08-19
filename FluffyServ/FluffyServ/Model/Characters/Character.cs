@@ -1,5 +1,6 @@
 ﻿using FluffyServ.Model.GameItems;
 using FluffyServ.Model.Mechanisms;
+using FluffyServ.Model.Mechanisms.Battle;
 using System;
 
 namespace FluffyServ.Model
@@ -147,7 +148,7 @@ namespace FluffyServ.Model
         internal bool Damage(int amount)
         {
             health -= amount;
-            if (health < 0)
+            if (health <= 0)
             {
                 health = 0;
                 return true;
@@ -224,6 +225,7 @@ namespace FluffyServ.Model
         internal void DestroyCharacter(Grid g)
         {
             g.EndBattle(this);
+            g.GetCell(this.x, this.y).AddFromInventory(this.inventory);
             g.GetCell(this.x, this.y).RemoveCharacter(this);
         }
 
@@ -247,36 +249,49 @@ namespace FluffyServ.Model
         }
 
         /// <summary>
-        /// Attack the target character. Return true if the target is killed.
+        /// Attack the target character. Return the BattleActionInfos.
+        /// EndBattle is true if the target is killed.
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        internal bool AttackCharacter(Character c)
+        internal BattleActionInfos AttackCharacter(Character c)
         {
+            BattleActionResult actionResult = BattleActionResult.NOTHING;
+
             int min = (int)(attack * 0.8);
             int max = (int)(attack * 1.2);
 
             int value = 0;
             Random rand = new Random();
             double chance = rand.NextDouble();
+            // Hit
             if (chance < 0.8)
             {
                 value = rand.Next(min, max) - c.defense;
-                if (value < 0)
+                actionResult = BattleActionResult.HIT;
+                // Useless
+                if (value <= 0)
                 {
                     value = 0;
+                    actionResult = BattleActionResult.NO_DAMAGE;
                 }
+                // Critics
                 if (chance < 0.2)
                 {
                     value *= 2;
+                    actionResult = BattleActionResult.CRITIC;
                 }
             }
+            // Miss
             else
             {
                 value = 0;
+                actionResult = BattleActionResult.MISS;
             }
             Console.WriteLine("Damage " + value);
-            return c.Damage(value);
+            bool endBattle = c.Damage(value);
+
+            return new BattleActionInfos(endBattle, this.Name, c.Name, value, BattleAction.ATTACK, actionResult);
         }
 
         /// <summary>

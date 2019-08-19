@@ -48,6 +48,8 @@ function onMessage(evt) {
         endBattleMessage(jobject.Datas);
     } else if (jobject.Command == "loose"){
         looseMessage(jobject.Datas);
+    } else if (jobject.Command == "equipement"){
+        equipementMessage(jobject.Datas);
     }
 }
 
@@ -84,6 +86,9 @@ function onClickInventory() {
     var jobject = { "Id": id, "Command": "inventory", "Datas": null }
     var message = JSON.stringify(jobject);
     websocket.send(message);
+    jobject = { "Id": id, "Command": "equipement", "Datas": null }
+    message = JSON.stringify(jobject);
+    websocket.send(message);
 }
 
 function onClickMap() {
@@ -106,6 +111,18 @@ function onClickUseItem(item) {
     websocket.send(message);
 }
 
+function onClickEquipItem(item) {
+    var jobject = { "Id": id, "Command": "equip", "Datas": item }
+    var message = JSON.stringify(jobject);
+    websocket.send(message);
+}
+
+function onClickDropItem(item) {
+    var jobject = { "Id": id, "Command": "drop", "Datas": item }
+    var message = JSON.stringify(jobject);
+    websocket.send(message);
+}
+
 function onClickCraftItem(item) {
     var jobject = { "Id": id, "Command": "craft", "Datas": item }
     var message = JSON.stringify(jobject);
@@ -124,6 +141,14 @@ function onClickBattle(id){
 function onClickBattleAction(action){
     if(doAction()){
         var jobject = { "Id": id, "Command": "action_battle", "Datas": action }
+        var message = JSON.stringify(jobject);
+        websocket.send(message);
+    }
+}
+
+function onClickPick(item){
+    if(doAction()){
+        var jobject = { "Id": id, "Command": "pick", "Datas": item }
         var message = JSON.stringify(jobject);
         websocket.send(message);
     }

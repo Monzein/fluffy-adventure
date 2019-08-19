@@ -1,6 +1,7 @@
 ﻿using Fleck;
 using FluffyServ.Model;
 using FluffyServ.Model.GameItems;
+using FluffyServ.Model.GameItems.Craft;
 
 namespace FluffyServ.Server
 {
@@ -27,10 +28,18 @@ namespace FluffyServ.Server
             socket.Send(messageResult.ToString());
         }
 
+        internal static void EquipementMessage(ClientSession session, IWebSocketConnection socket)
+        {
+            string datas = session.SessionPlayer.Gear.ToString();
+            ServerMessage messageResult = new ServerMessage(session.Id, "equipement", datas);
+            socket.Send(messageResult.ToString());
+        }
+
         internal static void MapMessage(ClientSession session, IWebSocketConnection socket, Grid grid)
         {
-            //string datas = grid.GetViewMapString();
-            string datas = grid.GetViewPlayerMapString(session.SessionPlayer);
+            //string map = grid.GetViewMapString();
+            string map = grid.GetViewPlayerMapString(session.SessionPlayer);
+            string datas = "{\"width\":" + grid.Width + ",\"height\":" + grid.Height + ",\"map\":" + map + "}";
             ServerMessage messageResult = new ServerMessage(session.Id, "map", datas);
             socket.Send(messageResult.ToString());
         }
@@ -57,6 +66,7 @@ namespace FluffyServ.Server
                 if (session.SessionPlayer.Battle != null)
                 {
                     messageResult = new ServerMessage(session.Id, "battle", session.SessionPlayer.Battle.ToString());
+                    //socket.Send(messageResult.ToString());
                 }
                 else
                 {

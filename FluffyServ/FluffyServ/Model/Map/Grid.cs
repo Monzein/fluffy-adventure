@@ -1,5 +1,7 @@
 ﻿using FluffyServ.Model.GameItems;
+using FluffyServ.Model.GameItems.Equipables;
 using FluffyServ.Model.Mechanisms;
+using FluffyServ.Model.Mechanisms.Battle;
 using System;
 using System.Collections.Generic;
 
@@ -101,13 +103,6 @@ namespace FluffyServ.Model
                 for (int j = 0; j < width; j++)
                 {
                     cells[i, j] = new Cell(Terrain.GetTerrain(tab[i, j]), rand);
-                    if (cells[i, j].Type == Terrain.FOREST)
-                    {
-                        if (rand.NextDouble() > 0.5)
-                        {
-                            characters.Add(new NonPlayableCharacter(CharacterTemplate.YOUNG_BOAR, j, i, this));
-                        }
-                    }
                 }
             }
         }
@@ -153,6 +148,15 @@ namespace FluffyServ.Model
         }
 
         /// <summary>
+        /// Add a character to the grid.
+        /// </summary>
+        /// <param name="c"></param>
+        internal void AddCharacter(Character c)
+        {
+            characters.Add(c);
+        }
+
+        /// <summary>
         /// Get the character with the gevin id.
         /// </summary>
         /// <param name="characterId"></param>
@@ -195,7 +199,7 @@ namespace FluffyServ.Model
         public void StartBattle(Player attacker, int defenderId)
         {
             Character defender = GetCharacter(defenderId);
-            if(attacker.X == defender.X && attacker.Y == defender.Y)
+            if (attacker.X == defender.X && attacker.Y == defender.Y)
             {
                 battles.AddBattle(attacker, defender);
             }
@@ -240,12 +244,59 @@ namespace FluffyServ.Model
             }
         }
 
+        /// <summary>
+        /// Try to pick up the given item on the current player cell to the player inventory. 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="itemName"></param>
+        public void PickUpItem(Player player, string itemName)
+        {
+            if (player != null)
+            {
+                Cell c = GetCell(player.X, player.Y);
+                Tuple<GameItem, int> result = c.CountItem(itemName);
+                if (result!=null && result.Item2>0)
+                {
+                    if (player.Inventory.AddItem(result.Item1))
+                    {
+                        c.RemoveItems(result.Item1, 1);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The player drop the selected item on the current cell
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="itemName"></param>
+        public void DropItem(Player player, string itemName)
+        {
+            GameItem item = GameItemGlossary.Parse(itemName);
+            if (item != null)
+            {
+                if(player.Inventory.RemoveItems(item, 1))
+                {
+                    GetCell(player.X, player.Y).AddItem(item);
+                }
+            }
+        }
+
+        public void EquipItem(Player player, string itemName)
+        {
+            Equipable item = EquipableGlossary.Parse(itemName);
+            if (item != null)
+            {
+                player.EquipObject(item);
+            }
+        }
+
         /*
          * ROUNDS
          */
-         /// <summary>
-         /// All the fight do one round.
-         /// </summary>
+        /// <summary>
+        /// All the fight do one round.
+        /// </summary>
         public void DoRounds()
         {
             battles.RoundBattles();

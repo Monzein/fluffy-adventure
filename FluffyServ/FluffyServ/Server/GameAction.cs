@@ -32,6 +32,9 @@ namespace FluffyServ.Server
                 case GameActionType.ACTION_FIGHT:
                     session.SessionPlayer.SetNextBattleAction((string)param);
                     break;
+                case GameActionType.PICK:
+                    grid.PickUpItem(session.SessionPlayer, (string)param);
+                    break;
             }
         }
     }
@@ -41,6 +44,7 @@ namespace FluffyServ.Server
         MOVE,
         EXTRACT,
         START_FIGHT,
-        ACTION_FIGHT
+        ACTION_FIGHT,
+        PICK
     }
 }

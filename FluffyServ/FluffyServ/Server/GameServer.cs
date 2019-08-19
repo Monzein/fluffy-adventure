@@ -1,5 +1,6 @@
 ﻿using Fleck;
 using FluffyServ.Model;
+using FluffyServ.Model.GameItems.Craft;
 using FluffyServ.Model.Mechanisms;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +12,7 @@ namespace FluffyServ.Server
     public class GameServer : WebSocketServer
     {
         private const string LOCATION = "ws://0.0.0.0:7000";
-        private const int TICK_TIME = 200;
+        private const int TICK_TIME = 100;
 
         private static Grid grid;
         private static Dictionary<IWebSocketConnection, ClientSession> clients = new Dictionary<IWebSocketConnection, ClientSession>();
@@ -22,7 +23,10 @@ namespace FluffyServ.Server
         public GameServer(string location = LOCATION) : base(location)
         {
             grid = GridCreator.Creator1(50, 50, 0);
+            //grid = GridCreator.Creator1(20, 20, 0);
             Console.WriteLine("Map Generated!");
+            Console.WriteLine(ItemCrafting.Instance.ToString());
+            Console.WriteLine("Crafter generated!");
             gameActions = new List<GameAction>();
         }
 
@@ -116,6 +120,9 @@ namespace FluffyServ.Server
                 case "inventory":
                     MessageSender.InventoryMessage(session, socket);
                     break;
+                case "equipement":
+                    MessageSender.EquipementMessage(session, socket);
+                    break;
                 case "map":
                     MessageSender.MapMessage(session, socket, grid);
                     break;
@@ -146,11 +153,31 @@ namespace FluffyServ.Server
                         gameActions.Add(new GameAction(GameActionType.ACTION_FIGHT, session, messageIn.Datas.ToString()));
                     }
                     break;
+                case "pick":
+                    if (session.DoAction())
+                    {
+                        gameActions.Add(new GameAction(GameActionType.PICK, session, messageIn.Datas.ToString()));
+                    }
+                    break;
+                case "drop":
+                    grid.DropItem(session.SessionPlayer, messageIn.Datas.ToString());
+                    MessageSender.InventoryMessage(session, socket);
+                    break;
+                case "equip":
+                    grid.EquipItem(session.SessionPlayer, messageIn.Datas.ToString());
+                    MessageSender.InventoryMessage(session, socket);
+                    MessageSender.EquipementMessage(session, socket);
+                    break;
                 default:
                     break;
             }
         }
 
+        /// <summary>
+        /// At a tick of the server, all the action are consummed in this order :
+        /// GameAction -> Battle
+        /// Messages are sent to the clients.
+        /// </summary>
         private static void DoServerTick()
         {
             foreach(GameAction action in gameActions)

@@ -9,7 +9,7 @@
             : base(template.Name, x, y, g, template.Movement, template.MaxHealth,
                   template.MaxEnergy, template.Attack, template.Defense)
         {
-            
+            Inventory.AddFromInventory(template.Inventory,false);
         }
     }
 }

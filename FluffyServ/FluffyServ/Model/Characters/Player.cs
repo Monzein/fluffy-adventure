@@ -1,4 +1,6 @@
 ﻿using FluffyServ.Model.GameItems;
+using FluffyServ.Model.GameItems.Craft;
+using FluffyServ.Model.GameItems.Equipables;
 using FluffyServ.Model.Mechanisms;
 
 namespace FluffyServ.Model
@@ -9,10 +11,23 @@ namespace FluffyServ.Model
         private int idPlayer;
         private bool[,] mapView;
 
+        private HumanoidEquipement gear;
+        public HumanoidEquipement Gear { get => gear; }
+
         internal Player(Grid g, int x, int y, int idPlayer) : base("joueur_" + idPlayer, x, y, g, Displacement.TERRESTRIAL)
         {
             this.idPlayer = idPlayer;
             this.mapView = new bool[g.Height, g.Width];
+            gear = new HumanoidEquipement();
+
+            Inventory.AddItem(EquipableGlossary.WOOD_CUDGLE);
+            Inventory.AddItem(EquipableGlossary.WOOD_RUDIMENTARY_SHIELD);
+            Inventory.AddItem(EquipableGlossary.WOOD_SPEAR);
+            Inventory.AddItem(EquipableGlossary.STUNNING_STONE);
+            Inventory.AddItem(EquipableGlossary.FUR_CLOTHES);
+            Inventory.AddItem(EquipableGlossary.CASUAL_CLOTHES);
+
+            gear.EquipObject(EquipableGlossary.CASUAL_CLOTHES, this.Inventory);
             View(g);
         }
 
@@ -52,6 +67,15 @@ namespace FluffyServ.Model
         internal void Craft(string name, Grid g)
         {
             ItemCrafting.Instance.CraftItem(name, Inventory, g.GetCell(X,Y));
+        }
+
+        /// <summary>
+        /// Equip the given equipable.
+        /// </summary>
+        /// <param name="item"></param>
+        internal void EquipObject(Equipable item)
+        {
+            Gear.EquipObject(item, this.Inventory);
         }
 
         public override string ToString()

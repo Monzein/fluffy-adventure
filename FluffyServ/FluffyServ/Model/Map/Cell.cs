@@ -84,14 +84,42 @@ namespace FluffyServ.Model
             characters.Remove(character);
         }
 
+        /// <summary>
+        /// Add an item to this cell.
+        /// </summary>
+        /// <param name="item"></param>
         internal void AddItem(GameItem item)
         {
             inventory.AddItem(item);
         }
 
-        internal void RemoveItems(GameItem item, int number = 1)
+        /// <summary>
+        /// Empty the given inventory on this cell.
+        /// </summary>
+        /// <param name="inv"></param>
+        internal void AddFromInventory(Inventory inv)
         {
-            inventory.RemoveItems(item, number);
+            this.inventory.AddFromInventory(inv,true);
+        }
+
+        /// <summary>
+        /// Remove the number of item from the cell.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="number"></param>
+        internal bool RemoveItems(GameItem item, int number = 1)
+        {
+            return inventory.RemoveItems(item, number);
+        }
+
+        /// <summary>
+        /// Return the number of the game item present in the cell.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        internal Tuple<GameItem,int> CountItem(string item)
+        {
+            return inventory.GetTupleItemCount(item);
         }
 
         /// <summary>

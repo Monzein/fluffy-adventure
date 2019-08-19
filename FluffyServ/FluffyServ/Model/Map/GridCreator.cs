@@ -2,8 +2,18 @@
 
 namespace FluffyServ.Model
 {
+    /// <summary>
+    /// This class use different algorithm to create and populate Grid.
+    /// </summary>
     public class GridCreator
     {
+        /// <summary>
+        /// Create and populate a Grid with the given dimensions and a seed for the random.
+        /// </summary>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="seed"></param>
+        /// <returns></returns>
         public static Grid Creator1(int height, int width, int seed)
         {
             //vérifications
@@ -136,8 +146,42 @@ namespace FluffyServ.Model
 
             // Construction de la grille selon le tableau
             Grid grid = new Grid(width, height, seed, tab);
+            
+            Populate1(grid,r);
             return grid;
         }
 
+        /// <summary>
+        /// Populate the given Grid. Populate means add the non playable character
+        /// and random object.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="rand"></param>
+        private static void Populate1(Grid grid, Random rand)
+        {
+            for (int i = 0; i < grid.Height; i++)
+            {
+                for (int j = 0; j < grid.Width; j++)
+                {
+                    if (grid.GetTerrain(j, i) != Terrain.OCEAN)
+                    {
+                        if (grid.GetTerrain(j, i) == Terrain.PLAIN)
+                        {
+                            if (rand.NextDouble() > 0.3)
+                            {
+                                grid.AddCharacter(new NonPlayableCharacter(CharacterTemplate.CHICKEN, j, i, grid));
+                            }
+                        }
+                        if (grid.GetTerrain(j, i) == Terrain.FOREST)
+                        {
+                            if (rand.NextDouble() > 0.2)
+                            {
+                                grid.AddCharacter(new NonPlayableCharacter(CharacterTemplate.YOUNG_BOAR, j, i, grid));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

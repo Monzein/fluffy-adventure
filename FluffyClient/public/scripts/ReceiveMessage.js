@@ -25,7 +25,7 @@ function boardMessage(data) {
     var info = jobject[4];
     var ressources = jobject[4].ressources;
     var characters = jobject[4].characters;
-    var items = jobject[4].items;
+    var items = jobject[4].items.items;
     var cellInfoView = document.getElementById("cellInfo");
     result = "<p>" + info.type + "</p><p>Ressources : </p>";
     for (i = 0; i < ressources.length; i++) {
@@ -44,19 +44,23 @@ function boardMessage(data) {
     }
     result += "</p><p>Objets : </p>";
     for (i = 0; i < items.length; i++) {
-        result += "<p>" + items[i].Name + ": " + items[i].Value + "<p>";
+        result += "<p>" + items[i].Name + ": " + items[i].Value + 
+        " <button class=\"btn\" onclick=\"onClickPick('" + items[i].Name + "')\">Prendre</button><p>";
     }
     cellInfoView.innerHTML = result;
 }
 
 function mapMessage(data) {
     var jobject = JSON.parse(data);
+    var height = jobject.height;
+    var width = jobject.width;
+    var map = jobject.map;
     var board = document.getElementById("allMap");
     var result = "";
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < height; i++) {
         result += "<tr>";
-        for (var j = 0; j < 50; j++) {
-            result += "<td class=\"allMapCell " + jobject[i * 50 + j].type + "\"></td>";
+        for (var j = 0; j < width; j++) {
+            result += "<td class=\"allMapCell " + map[i * height + j].type + "\"></td>";
         }
         result += "</tr>";
     }
@@ -72,16 +76,41 @@ function infoMessage(data) {
 function inventoryMessage(data) {
     var inventory = document.getElementById("inventory");
     var jobject = JSON.parse(data);
+    var items = jobject.items;
     var result = "";
-    for (i = 0; i < jobject.length; i++) {
-        result += "<p>" + jobject[i].Name + ": " + jobject[i].Value;
-        if (jobject[i].Usable) {
-            result += "<button type=\"button\" onclick=\"onClickUseItem(\'"
-                + jobject[i].Name + "\')\">Utiliser</button>";
+    for (i = 0; i < items.length; i++) {
+        result += "<p class= \"item-cell\"" + "\";\">"
+
+        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\"/>";
+        result += "<span class=\"item-number\">" + items[i].Value + "</span>";
+
+        result += "<img src=\"./images/actions/drop.png\" class=\"item-action-img\" onclick=\"onClickDropItem(\'"
+                + items[i].Name + "\')\"/>";
+        if (items[i].Usable) {
+            result += "<img src=\"./images/actions/use.png\" class=\"item-action-img\" onclick=\"onClickUseItem(\'"
+                + items[i].Name + "\')\"/>";
         }
+        if (items[i].Equipable){
+            result += "<img src=\"./images/actions/equip.png\" class=\"item-action-img\" onclick=\"onClickEquipItem(\'"
+                + items[i].Name + "\')\"/>";
+        }
+
+        /*result += items[i].Name + ": " + items[i].Value;
+        result += "<button type=\"button\" onclick=\"onClickDropItem(\'"
+                + items[i].Name + "\')\">Lacher</button>";
+        if (items[i].Usable) {
+            result += "<button type=\"button\" onclick=\"onClickUseItem(\'"
+                + items[i].Name + "\')\">Utiliser</button>";
+        }
+        if (items[i].Equipable){
+            result += "<button type=\"button\" onclick=\"onClickEquipItem(\'"
+                + items[i].Name + "\')\">Equiper</button>";
+        }*/
         result += "</p>";
     }
     inventory.innerHTML = result;
+    document.getElementById("mass").innerText = jobject.mass;
+    document.getElementById("space").innerText = jobject.space;
 }
 
 function receipesMessage(data) {
@@ -89,9 +118,11 @@ function receipesMessage(data) {
     var jobject = JSON.parse(data);
     var result = "";
     for (i = 0; i < jobject.length; i++) {
-        result += "<p>" + jobject[i] +
+        var item = jobject[i];
+        var itemName = item.Item.Name;
+        result += "<p>" + itemName +
             "<button type=\"button\" onclick=\"onClickCraftItem(\'"
-            + jobject[i] + "\')\">Créer</button>" + "</p>";
+            + itemName + "\')\">Créer</button>" + "</p>";
     }
     receipes.innerHTML = result;
 }
@@ -104,12 +135,10 @@ function refreshMessage(data) {
 
 function battleMessage(data) {
     if(data == null){
-        console.log("no battle")
         inBattle = false;
         $('#ModalBattle').modal('hide');
     } else{
         if(inBattle == false){
-            console.log("start battle")
             inBattle = true;
             $('#ModalBattle').modal('show');
 
@@ -117,15 +146,19 @@ function battleMessage(data) {
         var jobject = JSON.parse(data);
         var attacker = jobject.attacker;
         var defender = jobject.defender;
+        var firstMessage = jobject.firstMessage;
+        var secondMessage = jobject.secondMessage;
         var result =  "<p>" + attacker.name + "</p><p>vie: " + attacker.health + "</p><p>Attaque</p><p>Defense</p>";
         document.getElementById("attacker").innerHTML = result;
         var result =  "<p>" + defender.name + "</p><p>vie: " + defender.health + "</p><p>Attaque</p><p>Defense</p>";
         document.getElementById("defender").innerHTML = result;
+        document.getElementById("firstBattleMessage").innerHTML = firstMessage;
+        document.getElementById("secondBattleMessage").innerHTML = secondMessage;
+
     }
 }
 
 function endBattleMessage(data){
-    console.log("end battle")
     inBattle = false;
     $('#ModalBattle').modal('hide');
 }
@@ -144,3 +177,20 @@ function doAction(){
     return false;
 }
 
+function equipementMessage(data) {
+    var equipement = document.getElementById("equipement");
+    var jobject = JSON.parse(data);
+    var resultHTML = "";
+    resultHTML += "<div>Armure: " + equipementToString(jobject.Body) + "<div>";
+    resultHTML += "<div>Main droite: " + equipementToString(jobject.RightHand) + "<div>";
+    resultHTML += "<div>Main gauche: " + equipementToString(jobject.LeftHand) + "<div>";
+
+    equipement.innerHTML = resultHTML;
+}
+
+function equipementToString(equipement){
+    if(!equipement){
+        return "Vide";
+    }
+    return equipement.Name + " (" + equipement.Attack + "/" + equipement.Defense + ")";
+}
