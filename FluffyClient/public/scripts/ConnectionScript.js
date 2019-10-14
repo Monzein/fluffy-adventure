@@ -117,6 +117,12 @@ function onClickEquipItem(item) {
     websocket.send(message);
 }
 
+function onClickUnequipItem(item) {
+    var jobject = { "Id": id, "Command": "unequip", "Datas": item }
+    var message = JSON.stringify(jobject);
+    websocket.send(message);
+}
+
 function onClickDropItem(item) {
     var jobject = { "Id": id, "Command": "drop", "Datas": item }
     var message = JSON.stringify(jobject);

@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using FluffyServ.Model.GameItems;
+using FluffyServ.Model.Entities.GameItems;
 using FluffyServ.Model.Mechanisms;
+using FluffyServ.Model.Entities.Characters;
 
 namespace FluffyServ.Model
 {

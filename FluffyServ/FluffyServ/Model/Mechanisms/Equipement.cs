@@ -1,4 +1,4 @@
-﻿using FluffyServ.Model.GameItems.Equipables;
+﻿using FluffyServ.Model.Entities.GameItems.Equipables;
 
 namespace FluffyServ.Model.Mechanisms
 {
@@ -9,6 +9,7 @@ namespace FluffyServ.Model.Mechanisms
     public abstract class Equipement
     {
         private int totalDefense = 0;
+        private int totalAttack = 0;
 
         /// <summary>
         /// The total of defense point of the equipement.
@@ -24,6 +25,10 @@ namespace FluffyServ.Model.Mechanisms
             if (item != null)
             {
                 totalDefense += item.Defense;
+                if (item.GetType().IsSubclassOf(typeof(Weapon)))
+                {
+                    totalAttack += ((Weapon)item).Attack;
+                }
             }
         }
 
@@ -36,7 +41,23 @@ namespace FluffyServ.Model.Mechanisms
             if (item != null)
             {
                 totalDefense -= item.Defense;
+                if (item.GetType().IsSubclassOf(typeof(Weapon)))
+                {
+                    totalAttack -= ((Weapon)item).Attack;
+                }
             }
+        }
+
+        /// <summary>
+        /// Remove the last item and add the new item.
+        /// The two parameteres could be null.
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <param name="oldItem"></param>
+        protected virtual void SwitchEquipement(Equipable newItem, Equipable oldItem)
+        {
+            RemoveEquipement(oldItem);
+            AddEquipement(newItem);
         }
 
         /// <summary>
@@ -47,7 +68,27 @@ namespace FluffyServ.Model.Mechanisms
         /// <returns></returns>
         public abstract bool EquipObject(Equipable item, Inventory inventory);
 
+        /// <summary>
+        /// Unequip the given equipable.
+        /// Return true if the item was correctly unequiped.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="inventory"></param>
+        /// <returns></returns>
+        public abstract bool UnequipObject(Equipable item, Inventory inventory);
 
-        public abstract bool UnEquip(string part);
+        public override sealed string ToString()
+        {
+            string result = "{\"Defense\":" + totalDefense + ",\"Attack\":" + totalAttack +
+                ",\"Equipements\":" + EquipementToString() + "}";
+
+            return result;
+        }
+
+        /// <summary>
+        /// Must be implemented. The list of items and the position for an equipement set.
+        /// </summary>
+        /// <returns></returns>
+        public abstract string EquipementToString();
     }
 }

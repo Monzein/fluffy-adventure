@@ -13,6 +13,12 @@
     <script src="/scripts/ReceiveMessage.js"></script>
 </head>
 
+<script>
+    $(document).ready(function(){
+        $'[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+
 <body>
     <div id="connection">
         <button id="connectButton" class="btn btn-default" onclick="connect()">Connect</button>
@@ -45,7 +51,15 @@
                     <span class="glyphicon glyphicon-arrow-down"></span>
                 </button>
             </div>
-            <div id="cellInfo" class="info" style="float:left"></div>
+            <div id="cellInfo" class="info" style="float:left">
+                <p id="cellInfo-type"></p>
+                <p>Ressources : </p>
+                <div id="cellInfo-resources"></div>
+                <p>Personnages : </p>
+                <div id="cellInfo-characters"></div>
+                <p>Objets : </p>
+                <div id="cellInfo-items"></div>
+            </div>
         </div>
 
         <div class="modal fade" id="ModalInventory" role="dialog">
@@ -60,17 +74,26 @@
                     <div class="modal-body">
                         <div>
                             <div class="half-container" style="text-align:center">
-                                Masse: <span id="mass"></span>
+                                Masse : <span id="mass"></span>
                             </div>
                             <div class="half-container" style="text-align:center">
-                                Espace: <span id="space"></span>
+                                Espace : <span id="space"></span>
                             </div>
                         </div>
-                        <div id="inventory" class="half-container container-borderd" style="">
-
+                        <div>
+                            <div class="half-container" style="text-align:center">
+                                Attaque : <span id="attack"></span>
+                            </div>
+                            <div class="half-container" style="text-align:center">
+                                Defense : <span id="defense"></span>
+                            </div>
                         </div>
-                        <div id="equipement" class="half-container container-borderd" style="">
-
+                        <div id="inventory" class="half-container container-borderd">
+                        </div>
+                        <div id="equipement" class="half-container container-borderd">
+                            <div class="item-cell" id="left-slot"></div>
+                            <div class="item-cell" id="body-slot"></div>
+                            <div class="item-cell" id="right-slot"></div>
                         </div>
                     </div>
                     <div class="modal-footer">

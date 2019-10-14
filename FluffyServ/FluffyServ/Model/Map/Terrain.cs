@@ -1,4 +1,4 @@
-﻿using FluffyServ.Model.GameItems;
+﻿using FluffyServ.Model.Entities.GameItems;
 using System;
 using System.Collections.Generic;
 

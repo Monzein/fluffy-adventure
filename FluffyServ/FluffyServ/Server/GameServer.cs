@@ -1,6 +1,6 @@
 ﻿using Fleck;
 using FluffyServ.Model;
-using FluffyServ.Model.GameItems.Craft;
+using FluffyServ.Model.Mechanisms.Craft;
 using FluffyServ.Model.Mechanisms;
 using Newtonsoft.Json;
 using System;
@@ -168,6 +168,11 @@ namespace FluffyServ.Server
                     MessageSender.InventoryMessage(session, socket);
                     MessageSender.EquipementMessage(session, socket);
                     break;
+                case "unequip":
+                    grid.UnequipItem(session.SessionPlayer, messageIn.Datas.ToString());
+                    MessageSender.InventoryMessage(session, socket);
+                    MessageSender.EquipementMessage(session, socket);
+                    break;
                 default:
                     break;
             }
@@ -187,9 +192,17 @@ namespace FluffyServ.Server
             gameActions.Clear();
             grid.DoRounds();
             List<IWebSocketConnection> toClose = new List<IWebSocketConnection>();
-            foreach (KeyValuePair<IWebSocketConnection, ClientSession> client in clients)
+            try
             {
-                RefreshClient(client.Key, client.Value, toClose);
+                foreach (KeyValuePair<IWebSocketConnection, ClientSession> client in clients)
+                {
+                    RefreshClient(client.Key, client.Value, toClose);
+                }
+            }
+            // A client was ended in a dirty way.
+            catch (System.InvalidOperationException e)
+            {
+                Console.WriteLine("CONNECTION ERROR: the clients list was updated during tick:\n" + e.Message);
             }
             foreach(IWebSocketConnection sock in toClose)
             {

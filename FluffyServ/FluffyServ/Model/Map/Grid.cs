@@ -1,5 +1,6 @@
-﻿using FluffyServ.Model.GameItems;
-using FluffyServ.Model.GameItems.Equipables;
+﻿using FluffyServ.Model.Entities.Characters;
+using FluffyServ.Model.Entities.GameItems;
+using FluffyServ.Model.Entities.GameItems.Equipables;
 using FluffyServ.Model.Mechanisms;
 using FluffyServ.Model.Mechanisms.Battle;
 using System;
@@ -291,6 +292,15 @@ namespace FluffyServ.Model
             }
         }
 
+        public void UnequipItem(Player player, string itemName)
+        {
+            Equipable item = EquipableGlossary.Parse(itemName);
+            if (item != null)
+            {
+                player.UnequipObject(item);
+            }
+        }
+
         /*
          * ROUNDS
          */
@@ -343,7 +353,9 @@ namespace FluffyServ.Model
         public string GetViewPlayerString(Player player)
         {
             Cell[,] tab = GetViewPlayer(player);
-            return GetViewString(tab);
+            String result = "{\"x\":" + player.X + ",\"y\":" + player.Y + ",\"cells\":";
+            result += GetViewString(tab) + "}";
+            return result;
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using FluffyServ.Model.GameItems.Equipables;
+﻿using FluffyServ.Model.Entities.GameItems.Equipables;
 using System;
 
 namespace FluffyServ.Model.Mechanisms
@@ -16,7 +16,9 @@ namespace FluffyServ.Model.Mechanisms
         {
 
         }
-
+        /// <summary>
+        /// The body armor
+        /// </summary>
         public BodyArmor Body
         {
             get { return body; }
@@ -27,12 +29,15 @@ namespace FluffyServ.Model.Mechanisms
                 AddEquipement(body);
             }
         }
+        /// <summary>
+        /// A single handed weapon used on the right hand or a two handed weapon.
+        /// </summary>
         public Weapon RightHand
         {
             get { return rightHand; }
             set
             {
-                if (value.GetType().Equals(typeof(TwoHandedWeapon)))
+                if (value!= null && value.GetType().Equals(typeof(TwoHandedWeapon)))
                 {
                     if (leftHand != null)
                     {
@@ -44,6 +49,9 @@ namespace FluffyServ.Model.Mechanisms
                 AddEquipement(rightHand);
             }
         }
+        /// <summary>
+        /// A single handed weapon used on the left hand.
+        /// </summary>
         public OneHandedWeapon LeftHand
         {
             get { return leftHand; }
@@ -80,10 +88,11 @@ namespace FluffyServ.Model.Mechanisms
 
             }else if (itemType.Equals(typeof(TwoHandedWeapon)))
             {
-                if (inventory.AddItem(leftHand) && inventory.SwitchItems(rightHand, item))
+                if (inventory.CanAddItem(leftHand) && inventory.SwitchItems(rightHand, item))
                 {
-                    rightHand = (TwoHandedWeapon)item;
-                    leftHand = null;
+                    inventory.AddItem(leftHand);
+                    RightHand = (TwoHandedWeapon)item;
+                    LeftHand = null;
                 }
             }
             else if (itemType.Equals(typeof(OneHandedWeapon)))
@@ -92,14 +101,14 @@ namespace FluffyServ.Model.Mechanisms
                 {
                     if (inventory.SwitchItems(rightHand, item))
                     {
-                        rightHand = (OneHandedWeapon)item;
+                        RightHand = (OneHandedWeapon)item;
                     }
                 }
                 else
                 {
                     if (inventory.SwitchItems(leftHand, item))
                     {
-                        leftHand = (OneHandedWeapon)item;
+                        LeftHand = (OneHandedWeapon)item;
                     }
                 }
             }
@@ -107,7 +116,11 @@ namespace FluffyServ.Model.Mechanisms
             return false;
         }
 
-        public override string ToString()
+        /// <summary>
+        /// The equipements on their given slots.
+        /// </summary>
+        /// <returns></returns>
+        public override string EquipementToString()
         {
             string bodyStr = "null";
             string rightStr = "null";
@@ -131,9 +144,37 @@ namespace FluffyServ.Model.Mechanisms
             return result;
         }
 
-        public override bool UnEquip(string part)
+        /// <summary>
+        /// Unequipe an object if the object is equipped and put in the inventory.
+        /// return true if the item was unequipped.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="inventory"></param>
+        /// <returns></returns>
+        public override bool UnequipObject(Equipable item, Inventory inventory)
         {
-            throw new NotImplementedException();
+            if (item != null)
+            {
+                if (inventory.CanAddItem(item))
+                {
+                    if (item.Equals(body))
+                    {
+                        inventory.AddItem(body);
+                        Body = null;
+                    }
+                    else if(item.Equals(rightHand))
+                    {
+                        inventory.AddItem(rightHand);
+                        RightHand = null;
+                    }
+                    else if (item.Equals(leftHand))
+                    {
+                        inventory.AddItem(leftHand);
+                        LeftHand = null;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

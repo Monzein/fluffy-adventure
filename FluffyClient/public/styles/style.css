@@ -31,10 +31,15 @@ td{
     height:420px;
 }
 
-#inventory{
-    padding: 10px;
-    overflow-y: scroll;
+/*#inventory{
+    padding: 5px;
+    overflow-y: none;
 }
+
+#equipement{
+    padding: 5px;
+    overflow-y: none;
+}*/
 
 /*
     Class
@@ -100,14 +105,16 @@ td{
 }
 
 .item-cell{
-
-    width: 33%;
-    max-width: 33%;
+    width: 31.5%;
+    max-width: 31.5%;
     height: 33%;
     max-height: 33%;
     display: inline-block;
     padding:2px;
     overflow: hidden;
+    margin:1px;
+    background-color: #fafafa;
+    border-radius:15%;
 }
 
 .item-img{
@@ -133,11 +140,15 @@ td{
     z-index: 2;
 }
 
-.item-number{
-
+.item-number{    
+    width: 33%;
+    height: 33%;
+    max-width: 33%;
+    max-height: 33%;
     position: relative;
-    top: 5%;
-    left: 5%;
-    float: none;
-    z-index: 1;
+    float: right;
+    bottom: 0%;
+    z-index: 2;
+    text-align: center;
+    vertical-align: center;
 }

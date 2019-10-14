@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using FluffyServ.Model.GameItems;
 using System;
-using FluffyServ.Model.GameItems.Equipables;
+using FluffyServ.Model.Entities.GameItems.Equipables;
+using FluffyServ.Model.Entities.GameItems;
 
 namespace FluffyServ.Model.Mechanisms
 {
@@ -38,13 +38,31 @@ namespace FluffyServ.Model.Mechanisms
         /// <returns></returns>
         internal bool AddItem(GameItem obj, Cell c = null)
         {
+            bool canAdd = CanAddItem(obj);
+            if (canAdd && obj!=null)
+            {
+                AddItems(obj, 1);
+            }
+            else if (c != null)
+            {
+                c.AddItem(obj);
+            }
+            return canAdd;
+        }
+
+        /// <summary>
+        /// Determine if the item could be added to the inventory.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        internal bool CanAddItem(GameItem obj)
+        {
             if (obj == null)
             {
                 return true;
             }
             if (maxMass == -1 && maxSpace == -1)
             {
-                AddItems(obj, 1);
                 return true;
             }
 
@@ -52,19 +70,15 @@ namespace FluffyServ.Model.Mechanisms
             {
                 if (CurrentSpace + obj.Space <= MaxSpace)
                 {
-                    AddItems(obj, 1);
                     return true;
                 }
-            }
-            if (c != null)
-            {
-                c.AddItem(obj);
             }
             return false;
         }
 
         /// <summary>
-        /// Add the items to the inventory. The check must be done before calling this method.
+        /// Add the items to the inventory. No control of mass/space are done in this method.
+        /// The controls must be done before calling this method.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="number"></param>
@@ -156,23 +170,23 @@ namespace FluffyServ.Model.Mechanisms
         /// Return false and cancel the switch if there is not enough 
         /// space or too much weight.
         /// </summary>
-        /// <param name="outItem"></param>
-        /// <param name="inItem"></param>
+        /// <param name="oldItem"></param>
+        /// <param name="newItem"></param>
         /// <returns></returns>
-        internal bool SwitchItems(GameItem inItem, GameItem outItem)
+        internal bool SwitchItems(GameItem newItem, GameItem oldItem)
         {
-            if (RemoveItems(outItem))
+            if (RemoveItems(oldItem))
             {
-                if (AddItem(inItem))
+                if (AddItem(newItem))
                 {
                     return true;
                 }
                 else
                 {
-                    if (!AddItem(outItem))
+                    if (!AddItem(oldItem))
                     {
                         throw new Exception("Switching item is impossible and the outItem: "
-                            + outItem.ToString() + " is lost.");
+                            + oldItem.ToString() + " is lost.");
                     }
                 }
             }

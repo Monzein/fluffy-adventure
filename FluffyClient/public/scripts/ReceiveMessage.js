@@ -5,49 +5,76 @@ var playerId;
 var canAction = true;
 var inBattle = false;
 
+var lastCell = "";
+var lastCharacters = "";
+var lastItems = "";
+
 function connectedMessage(data){
     playerId = "joueur_" + data;
     document.getElementById("id").innerText = data;
 }
 
 function boardMessage(data) {
+    
     var jobject = JSON.parse(data);
+    var position = jobject.x + ";" + jobject.y;
+    var cells = jobject.cells;
     var board = document.getElementById("board");
     var result = "";
-    for (var i = 0; i < 3; i++) {
-        result += "<tr>";
-        for (var j = 0; j < 3; j++) {
-            result += "<td class=\"mapCell " + jobject[i * 3 + j].type + "\"></td>";
+
+    var info = cells[4];
+
+    var ressources = cells[4].ressources;
+    if(position!=lastCell){
+        for (var i = 0; i < 3; i++) {
+            result += "<tr>";
+            for (var j = 0; j < 3; j++) {
+                result += "<td class=\"mapCell " + cells[i * 3 + j].type + "\"></td>";
+            }
+            result += "</tr>";
         }
-        result += "</tr>";
+        board.innerHTML = result;
+        lastCell = position;
+        document.getElementById("cellInfo-type").innerHTML = info.type;
+
+        result = "";
+        for (i = 0; i < ressources.length; i++) {
+            result += "<p><button type=\"button\" class=\"btn btn-default\" onclick=\"onClickExtract('" +
+                ressources[i].name + "')\">Extraire</button>" +
+                ressources[i].name + ": <span id=\"resources-" + ressources[i].name + "\">" + ressources[i].value + "<span></p>";
+        }
+        document.getElementById("cellInfo-resources").innerHTML= result;
+    }else{
+        for (i = 0; i < ressources.length; i++) {
+            document.getElementById("resources-"+ressources[i].name).innerHTML= ressources[i].value;
+        }
     }
-    board.innerHTML = result;
-    var info = jobject[4];
-    var ressources = jobject[4].ressources;
-    var characters = jobject[4].characters;
-    var items = jobject[4].items.items;
-    var cellInfoView = document.getElementById("cellInfo");
-    result = "<p>" + info.type + "</p><p>Ressources : </p>";
-    for (i = 0; i < ressources.length; i++) {
-        result += "<p><button class=\"btn btn-default\" onclick=\"onClickExtract('" +
-            ressources[i].name + "')\">Extraire</button>" +
-            ressources[i].name + ": " + ressources[i].value + "<p>";
-    }
-    result += "</p><p>Personnages : </p>";
+
+    var characters = cells[4].characters;
+    var items = cells[4].items.items;
+
+    result = "";
     for (i = 0; i < characters.length; i++) {
         if(playerId != characters[i].Name){
             result += "<p>" + characters[i].Name +
-            " <button class=\"btn\" onclick=\"onClickBattle('" +characters[i].Id + "')\">"
-            +"<span class=\"glyphicon glyphicon-screenshot\" </span></button><p>";
-            //"')\" data-toggle=\"modal\" data-target=\"#ModalBattle\" data-backdrop=\"static\" data-keyboard=\"false\"></span><p>";
+            " <button type=\"button\" class=\"btn\" onclick=\"onClickBattle('" +characters[i].Id + "')\">"
+            +"<span class=\"glyphicon glyphicon-screenshot\" </span></button></p>";
         }
     }
-    result += "</p><p>Objets : </p>";
+    if(lastCharacters!=result){
+        document.getElementById("cellInfo-characters").innerHTML = result;
+        lastCharacters = result;
+    }
+
+    result = "";
     for (i = 0; i < items.length; i++) {
         result += "<p>" + items[i].Name + ": " + items[i].Value + 
-        " <button class=\"btn\" onclick=\"onClickPick('" + items[i].Name + "')\">Prendre</button><p>";
+        " <button type=\"button\" class=\"btn\" onclick=\"onClickPick('" + items[i].Name + "')\">Prendre</button></p>";
     }
-    cellInfoView.innerHTML = result;
+    if(lastItems!=result){
+        document.getElementById("cellInfo-items").innerHTML = result;
+        lastItems = result;
+    }
 }
 
 function mapMessage(data) {
@@ -79,34 +106,26 @@ function inventoryMessage(data) {
     var items = jobject.items;
     var result = "";
     for (i = 0; i < items.length; i++) {
-        result += "<p class= \"item-cell\"" + "\";\">"
+        result += "<div class= \"item-cell\">";
 
-        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\"/>";
-        result += "<span class=\"item-number\">" + items[i].Value + "</span>";
+        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+ items[i].Name + "\"/>";
 
         result += "<img src=\"./images/actions/drop.png\" class=\"item-action-img\" onclick=\"onClickDropItem(\'"
-                + items[i].Name + "\')\"/>";
+                + items[i].Name + "\')\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Lâcher\"/>";
         if (items[i].Usable) {
             result += "<img src=\"./images/actions/use.png\" class=\"item-action-img\" onclick=\"onClickUseItem(\'"
-                + items[i].Name + "\')\"/>";
-        }
-        if (items[i].Equipable){
+                + items[i].Name + "\')\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Utiliser\"/>";
+        }   
+        else if (items[i].Equipable){
             result += "<img src=\"./images/actions/equip.png\" class=\"item-action-img\" onclick=\"onClickEquipItem(\'"
-                + items[i].Name + "\')\"/>";
+                + items[i].Name + "\')\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Equiper\"/>";
+        } else {
+            result += "<div class=\"item-action-img\"></div>";
         }
 
-        /*result += items[i].Name + ": " + items[i].Value;
-        result += "<button type=\"button\" onclick=\"onClickDropItem(\'"
-                + items[i].Name + "\')\">Lacher</button>";
-        if (items[i].Usable) {
-            result += "<button type=\"button\" onclick=\"onClickUseItem(\'"
-                + items[i].Name + "\')\">Utiliser</button>";
-        }
-        if (items[i].Equipable){
-            result += "<button type=\"button\" onclick=\"onClickEquipItem(\'"
-                + items[i].Name + "\')\">Equiper</button>";
-        }*/
-        result += "</p>";
+        result += "<span class=\"item-number\">" + items[i].Value + "</span>";
+
+        result += "</div>";
     }
     inventory.innerHTML = result;
     document.getElementById("mass").innerText = jobject.mass;
@@ -120,9 +139,19 @@ function receipesMessage(data) {
     for (i = 0; i < jobject.length; i++) {
         var item = jobject[i];
         var itemName = item.Item.Name;
-        result += "<p>" + itemName +
-            "<button type=\"button\" onclick=\"onClickCraftItem(\'"
-            + itemName + "\')\">Créer</button>" + "</p>";
+        result += "<div>" + itemName +
+            " <button class=\"btn btn-small\" type=\"button\" onclick=\"onClickCraftItem(\'"
+            + itemName + "\')\">Créer</button> ";
+        result += "<button class=\"btn btn-small\" type=\"button\" data-toggle=\"collapse\" data-target=\"#ingredients-" +
+        i + "\" aria-expanded=\"false\" aria-controls=\"ingredients-" + i + "\">Ingredients</button>";
+        result += "<div class=\"collapse\" id=\"ingredients-" + i + "\"><div class=\"card card-body\">";
+
+        for(j = 0; j < item.Ingredients.length; j++){
+            var ingredient = item.Ingredients[j];
+            result += "<p>" + ingredient.Number + " " + ingredient.Name + "</p>";
+        }
+        result += "</div></div>";
+        result += "</div>";
     }
     receipes.innerHTML = result;
 }
@@ -178,19 +207,32 @@ function doAction(){
 }
 
 function equipementMessage(data) {
-    var equipement = document.getElementById("equipement");
     var jobject = JSON.parse(data);
-    var resultHTML = "";
-    resultHTML += "<div>Armure: " + equipementToString(jobject.Body) + "<div>";
-    resultHTML += "<div>Main droite: " + equipementToString(jobject.RightHand) + "<div>";
-    resultHTML += "<div>Main gauche: " + equipementToString(jobject.LeftHand) + "<div>";
 
-    equipement.innerHTML = resultHTML;
+    console.log(jobject);
+    document.getElementById("attack").innerHTML = jobject.Attack;
+    document.getElementById("defense").innerHTML = jobject.Defense;
+
+    var equipements = jobject.Equipements;
+    document.getElementById("body-slot").innerHTML = equipementToString(equipements.Body,"body");
+    document.getElementById("right-slot").innerHTML = equipementToString(equipements.RightHand,"right");
+    document.getElementById("left-slot").innerHTML = equipementToString(equipements.LeftHand,"left");
 }
 
-function equipementToString(equipement){
+function equipementToString(equipement, slot){
+    
+    var result = "";
     if(!equipement){
-        return "Vide";
+        result = "<img src=\"./images/equipements/" + slot + "_slot.png\" class=\"item-img\"/>";
+        result += "<img src=\"./images/actions/emptyAction.png\" class=\"item-action-img\"/>";
     }
-    return equipement.Name + " (" + equipement.Attack + "/" + equipement.Defense + ")";
+    else{
+        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"";
+        result += equipement.Name + " (" + equipement.Attack + "/" + equipement.Defense + ")";
+        result += "\"/>";
+        result += "<img src=\"./images/actions/drop.png\" class=\"item-action-img\" onclick=\"onClickUnequipItem(\'"
+        + equipement.Name + "\')\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Retirer\"/>";
+    }
+
+    return result;
 }

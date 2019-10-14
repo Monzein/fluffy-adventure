@@ -1,5 +1,6 @@
 ﻿using Fleck;
 using FluffyServ.Model;
+using FluffyServ.Model.Entities.Characters;
 
 namespace FluffyServ.Server
 {

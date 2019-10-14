@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluffyServ.Model.Entities.Characters;
+using System.Collections.Generic;
 
 namespace FluffyServ.Model.Mechanisms.Battle
 {

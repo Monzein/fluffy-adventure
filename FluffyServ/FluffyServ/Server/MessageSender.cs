@@ -1,7 +1,7 @@
 ﻿using Fleck;
 using FluffyServ.Model;
-using FluffyServ.Model.GameItems;
-using FluffyServ.Model.GameItems.Craft;
+using FluffyServ.Model.Entities.GameItems;
+using FluffyServ.Model.Mechanisms.Craft;
 
 namespace FluffyServ.Server
 {
