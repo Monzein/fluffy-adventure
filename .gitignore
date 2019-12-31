@@ -1,4 +1,6 @@
-/packages
-/bin
-/obj
-/node_modules
+*/packages
+*/bin
+*/obj
+*/node_modules
+*/.vs
+*.sln
