@@ -1,6 +1,8 @@
 */packages
 */bin
 */obj
+FluffyServ/FluffyServ/bin/
+FluffyServ/FluffyServ/obj/
 */node_modules
 */.vs
 *.sln
