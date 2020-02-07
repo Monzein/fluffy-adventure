@@ -1,4 +1,4 @@
-﻿var ipServer = "localhost";
+﻿var ipServer = "192.168.1.10";
 var wsServerUri = "ws://" + ipServer + ":7000";
 var websocket = null;
 var id;

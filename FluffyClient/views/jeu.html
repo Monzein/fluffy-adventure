@@ -30,10 +30,13 @@
                 <div>Identifiant : <span id="id"></span></div>
                 <div>Energy : <span id="energy">0/100</span></div>
                 <div>Health : <span id="health">0/100</span></div>
+                <br/>
                 <div><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ModalInventory"
                         onclick="onClickInventory()">Inventaire</button></div>
+                <br/>
                 <div><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ModalMap"
                         onclick="onClickMap()">Carte</button></div>
+                <br/>
                 <div><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ModalCraft">Fabrication</button></div>
             </div>
             <div id="map" class="" style="float:left">
@@ -91,9 +94,7 @@
                         <div id="inventory" class="half-container container-borderd">
                         </div>
                         <div id="equipement" class="half-container container-borderd">
-                            <div class="item-cell" id="left-slot"></div>
-                            <div class="item-cell" id="body-slot"></div>
-                            <div class="item-cell" id="right-slot"></div>
+                            <div class="item-cell" id="left-slot"></div><div class="item-cell" id="body-slot"></div><div class="item-cell" id="right-slot"></div>
                         </div>
                     </div>
                     <div class="modal-footer">

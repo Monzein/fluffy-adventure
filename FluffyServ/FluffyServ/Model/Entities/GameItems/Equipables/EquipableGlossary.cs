@@ -8,12 +8,12 @@ namespace FluffyServ.Model.Entities.GameItems.Equipables
 {
     public class EquipableGlossary
     {
-        public static TwoHandedWeapon WOOD_SPEAR = new TwoHandedWeapon("Lance en bois", 5, 1, 5, 1);
-        public static TwoHandedWeapon STUNNING_STONE = new TwoHandedWeapon("Masse de pierre", 1, 5, 3, 0);
-        public static OneHandedWeapon WOOD_CUDGLE = new OneHandedWeapon("Gourdin en bois", 3, 2, 2, 0);
-        public static OneHandedWeapon WOOD_RUDIMENTARY_SHIELD = new OneHandedWeapon("Bouclier en bois rudimentaire", 3, 3, 0, 5);
-        public static BodyArmor CASUAL_CLOTHES = new BodyArmor("Tenue simple", 1, 1, 1);
-        public static BodyArmor FUR_CLOTHES = new BodyArmor("Ensemble de fourrure", 6, 4, 5);
+        public static TwoHandedWeapon WOOD_SPEAR = new TwoHandedWeapon("Lance en bois", "spear", 5, 1, 5, 1);
+        public static TwoHandedWeapon STUNNING_STONE = new TwoHandedWeapon("Masse de pierre", "stone", 1, 5, 3, 0);
+        public static OneHandedWeapon WOOD_CUDGLE = new OneHandedWeapon("Gourdin en bois", "cudgle", 3, 2, 2, 0);
+        public static OneHandedWeapon WOOD_RUDIMENTARY_SHIELD = new OneHandedWeapon("Bouclier en bois rudimentaire", "shield", 3, 3, 0, 5);
+        public static BodyArmor CASUAL_CLOTHES = new BodyArmor("Tenue simple", "casual_clothes", 1, 1, 1);
+        public static BodyArmor FUR_CLOTHES = new BodyArmor("Ensemble de fourrure", "fur_clothes", 6, 4, 5);
 
         /// <summary>
         /// Get the Equipable by his name.

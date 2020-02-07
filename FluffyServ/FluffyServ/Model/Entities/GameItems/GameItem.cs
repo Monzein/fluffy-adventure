@@ -12,9 +12,10 @@
         /// Constructor.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="picture"></param>
         /// <param name="space"></param>
         /// <param name="mass"></param>
-        public GameItem(string name, double space, double mass) : base(name)
+        public GameItem(string name, string picture, double space, double mass) : base(name, picture)
         {
             this.space = space;
             this.mass = mass;
@@ -32,7 +33,7 @@
         public override string ToString()
         {
             return "{\"Space\":\"" + space + "\",\"Mass\":\"" + mass + 
-                "\",\"Id\":\"" + Id + "\",\"Name\":\"" + Name + "\"}";
+                "\",\"Id\":\"" + Id + "\",\"Name\":\"" + Name + "\",\"Picture\":\"" + Picture + "\"}";
         }
     }
 }

@@ -83,7 +83,7 @@ namespace FluffyServ.Model.Entities.Characters
         /* Constructeurs */
         internal Character(string name, int x, int y, Grid g, Displacement movement,
             int maxHealth = DEFAULT_HEALTH, int maxEnergy = DEFAULT_ENERGY,
-            int attack = DEFAULT_ATTACK, int defense = DEFAULT_DEFENSE) : base(name)
+            int attack = DEFAULT_ATTACK, int defense = DEFAULT_DEFENSE) : base(name, "")
         {
             this.x = x;
             this.y = y;

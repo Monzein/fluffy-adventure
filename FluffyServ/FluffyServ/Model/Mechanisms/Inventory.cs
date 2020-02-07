@@ -272,17 +272,18 @@ namespace FluffyServ.Model.Mechanisms
                 {
                     if (pair.Key.GetType().Equals(typeof(UsableItem)))
                     {
-                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Value\":\"" +
-                            pair.Value + "\",\"Usable\":\"true\"}";
+                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Picture\":\"" + pair.Key.Picture +
+                            "\",\"Value\":\"" + pair.Value + "\",\"Usable\":\"true\"}";
                     }
                     else if (typeof(Equipable).IsInstanceOfType(pair.Key))
                     {
-                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Value\":\"" +
-                            pair.Value + "\",\"Equipable\":\"true\"}";
+                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Picture\":\"" + pair.Key.Picture +
+                            "\",\"Value\":\"" + pair.Value + "\",\"Equipable\":\"true\"}";
                     }
                     else
                     {
-                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Value\":\"" + pair.Value + "\"}";
+                        result += ",{\"Name\":\"" + pair.Key.Name + "\",\"Picture\":\"" + pair.Key.Picture +
+                            "\",\"Value\":\"" + pair.Value + "\"}";
                     }
                 }
                 result = result.Remove(1, 1);

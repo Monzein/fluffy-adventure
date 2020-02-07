@@ -7,7 +7,15 @@
     {
         private int defense = 0;
 
-        public Equipable(string name, double space, double mass, int defense) : base(name, space, mass)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="picture"></param>
+        /// <param name="space"></param>
+        /// <param name="mass"></param>
+        /// <param name="defense"></param>
+        public Equipable(string name, string picture, double space, double mass, int defense) : base(name, picture, space, mass)
         {
             this.defense = defense;
         }
@@ -18,6 +26,7 @@
         {
             string result = "{\"Space\":\"" + Space + "\",\"Mass\":\"" + Mass +
             "\",\"Id\":\"" + Id + "\",\"Name\":\"" + Name +
+            "\",\"Picture\":\"" + Picture +
             "\",\"Attack\":\"" + 0 +
             "\",\"Defense\":\"" + Defense + "\"}";
             return result;

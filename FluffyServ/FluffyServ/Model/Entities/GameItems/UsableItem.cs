@@ -14,11 +14,12 @@ namespace FluffyServ.Model.Entities.GameItems
         /// Constructor.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="picture"></param>
         /// <param name="space"></param>
         /// <param name="mass"></param>
         /// <param name="health"></param>
         /// <param name="energy"></param>
-        internal UsableItem(string name, double space, double mass, int health, int energy) : base(name, space, mass)
+        internal UsableItem(string name, string picture, double space, double mass, int health, int energy) : base(name, picture, space, mass)
         {
             this.health = health;
             this.energy = energy;
@@ -46,7 +47,7 @@ namespace FluffyServ.Model.Entities.GameItems
         public override string ToString()
         {
             return "{\"Space\":\"" + Space + "\",\"Mass\":\"" + Mass +
-                "\",\"Id\":\"" + Id + "\",\"Name\":\"" + Name + "\",\"Usable\":\"true\"}";
+                "\",\"Id\":\"" + Id + "\",\"Name\":\"" + Name + "\",\"Picture\":\"" + Picture + "\",\"Usable\":\"true\"}";
         }
     }
 }

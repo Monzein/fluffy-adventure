@@ -8,11 +8,11 @@ namespace FluffyServ.Model.Entities.GameItems
     /// </summary>
     public class GameItemGlossary
     {
-        public static UsableItem FRUIT_SALAD = new UsableItem("Salade de fruit", 2, 2, 0, 10);
-        public static UsableItem BANDAGE = new UsableItem("Bandage", 1, 1, 5, 0);
-        public static UsableItem MASO = new UsableItem("Maso", 1, 1, -10, 0);
-        public static GameItem FUR = new GameItem("Fourrure", 1, 2);
-        public static GameItem FEATHER = new GameItem("Plume", 0.1, 0.1);
+        public static UsableItem FRUIT_SALAD = new UsableItem("Salade de fruit", "fruit_salad", 2, 2, 0, 10);
+        public static UsableItem BANDAGE = new UsableItem("Bandage", "bandage", 1, 1, 5, 0);
+        public static UsableItem MASO = new UsableItem("Maso", "maso", 1, 1, -10, 0);
+        public static GameItem FUR = new GameItem("Fourrure", "fur", 1, 2);
+        public static GameItem FEATHER = new GameItem("Plume", "feather", 0.1, 0.1);
 
         /// <summary>
         /// Get the GameItem by his name.

@@ -103,12 +103,13 @@ function infoMessage(data) {
 function inventoryMessage(data) {
     var inventory = document.getElementById("inventory");
     var jobject = JSON.parse(data);
+    console.log(jobject);
     var items = jobject.items;
     var result = "";
     for (i = 0; i < items.length; i++) {
         result += "<div class= \"item-cell\">";
 
-        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+ items[i].Name + "\"/>";
+        result += "<img src=\"./images/items/" + items[i].Picture + ".png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+ items[i].Name + "\"/>";
 
         result += "<img src=\"./images/actions/drop.png\" class=\"item-action-img\" onclick=\"onClickDropItem(\'"
                 + items[i].Name + "\')\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Lâcher\"/>";
@@ -140,7 +141,7 @@ function receipesMessage(data) {
         var item = jobject[i];
         var itemName = item.Item.Name;
         result += "<div>" + itemName +
-            " <button class=\"btn btn-small\" type=\"button\" onclick=\"onClickCraftItem(\'"
+            " <button class=\"btn btn-small btn-primary\" type=\"button\" onclick=\"onClickCraftItem(\'"
             + itemName + "\')\">Créer</button> ";
         result += "<button class=\"btn btn-small\" type=\"button\" data-toggle=\"collapse\" data-target=\"#ingredients-" +
         i + "\" aria-expanded=\"false\" aria-controls=\"ingredients-" + i + "\">Ingredients</button>";
@@ -152,6 +153,7 @@ function receipesMessage(data) {
         }
         result += "</div></div>";
         result += "</div>";
+        result += "<br/>";
     }
     receipes.innerHTML = result;
 }
@@ -209,7 +211,6 @@ function doAction(){
 function equipementMessage(data) {
     var jobject = JSON.parse(data);
 
-    console.log(jobject);
     document.getElementById("attack").innerHTML = jobject.Attack;
     document.getElementById("defense").innerHTML = jobject.Defense;
 
@@ -227,7 +228,7 @@ function equipementToString(equipement, slot){
         result += "<img src=\"./images/actions/emptyAction.png\" class=\"item-action-img\"/>";
     }
     else{
-        result += "<img src=\"./images/items/generic_item.png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"";
+        result += "<img src=\"./images/items/" + equipement.Picture + ".png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"";
         result += equipement.Name + " (" + equipement.Attack + "/" + equipement.Defense + ")";
         result += "\"/>";
         result += "<img src=\"./images/actions/drop.png\" class=\"item-action-img\" onclick=\"onClickUnequipItem(\'"

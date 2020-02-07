@@ -7,12 +7,12 @@
     public class Resource : GameItem
     {
         /* RESSOURCES */
-        public static Resource WOOD = new Resource("bois", 1, 3, 1, 2);
-        public static Resource STONE = new Resource("pierre", 1, 6, 1, 4);
-        public static Resource IRON = new Resource("fer", 1, 10, 0.5, 6);
-        public static Resource FOLIAGE = new Resource("feuilllage", 1, 1, 1, 1);
-        public static Resource SAND = new Resource("sable", 1, 8, 0.8, 1);
-        public static Resource FRUIT = new Resource("fruit", 1, 1, 0.2, 1);
+        public static Resource WOOD = new Resource("bois","wood", 1, 3, 1, 2);
+        public static Resource STONE = new Resource("pierre", "stone", 1, 6, 1, 4);
+        public static Resource IRON = new Resource("fer", "iron", 1, 10, 0.5, 6);
+        public static Resource FOLIAGE = new Resource("feuilllage", "folliage", 1, 1, 1, 1);
+        public static Resource SAND = new Resource("sable", "sand", 1, 8, 0.8, 1);
+        public static Resource FRUIT = new Resource("fruit", "fruit", 1, 1, 0.2, 1);
 
         private double ratio;
         /// <summary>
@@ -35,12 +35,13 @@
         /// Constructor.
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="picture"></param>
         /// <param name="space"></param>
         /// <param name="mass"></param>
         /// <param name="ratio"></param>
         /// <param name="difficulty"></param>
-        internal Resource(string name, double space, double mass, double ratio, int difficulty) :
-            base(name,space,mass)
+        internal Resource(string name, string picture, double space, double mass, double ratio, int difficulty) :
+            base(name,picture,space,mass)
         {
             this.ratio = ratio;
             this.difficulty = difficulty;
@@ -82,7 +83,7 @@
         public override string ToString()
         {
             return "{\"Space\":\"" + Space + "\",\"Mass\":\"" + Mass +
-                 "\",\"Name\":\"" + Name + "\"}";
+                 "\",\"Name\":\"" + Name + "\",\"Picture\":\"" + Picture + "\"}";
         }
     }
 }
