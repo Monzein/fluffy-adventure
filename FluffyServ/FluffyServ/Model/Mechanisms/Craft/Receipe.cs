@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FluffyServ.Model.Mechanisms.Craft
 {
     /// <summary>
-    /// The list to create a given object.
+    /// The list to create a given object. Responsible for the creation of item by character.
     /// </summary>
     public class Receipe
     {
@@ -36,6 +36,13 @@ namespace FluffyServ.Model.Mechanisms.Craft
             return "";
         }
 
+        /// <summary>
+        /// Craft the item of the receipe. Use the item from the given inventory.
+        /// If it's possible to create the item, create it then put it in the inventory.
+        /// If the inventory is full, the item is dropped on the cell.
+        /// </summary>
+        /// <param name="inventory"></param>
+        /// <param name="c"></param>
         public void CraftItem(Inventory inventory, Cell c)
         {
             IList<Tuple<GameItem, int>> list = new List<Tuple<GameItem, int>>();
@@ -56,11 +63,21 @@ namespace FluffyServ.Model.Mechanisms.Craft
             inventory.AddItem(item, c);
         }
 
+        /// <summary>
+        /// Create the string of all the ingredients.
+        /// </summary>
+        /// <returns></returns>
         private string ingredientsString()
         {
             string result = "[";
             foreach(KeyValuePair<string, int> pair in ingredients){
-                result += ",{\"Name\":\"" + pair.Key + "\", \"Number\":" + pair.Value + "}";
+                GameItem item = GameItemGlossary.Parse(pair.Key);
+                string itemPicture = "null";
+                if (item != null)
+                {
+                    itemPicture = item.Picture;
+                }
+                result += ",{\"Name\":\"" + pair.Key + "\", \"Number\":" + pair.Value + ", \"Picture\":\"" + itemPicture + "\"}";
             }
             result = result.Remove(1, 1);
             result += "]";

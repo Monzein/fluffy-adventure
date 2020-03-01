@@ -35,6 +35,10 @@ td{
     margin:5%;
 }
 
+#ingredients{
+    margin: 2px;
+}
+
 /*
     Class
 */
@@ -120,6 +124,34 @@ td{
     top: 0%;
     float: none;
     z-index: 0;
+}
+
+.receipe-item{
+    width: 100%;
+    max-width: 100%;
+    max-height: 20%;
+    padding: 2px;
+    margin: 1px;
+    border-radius: 10%;
+}
+
+.receipe-item-img{
+    width: 20%;
+    background-color: #fafafa;
+    border-radius:15%;
+}
+
+.receipe-ingredient{
+    width: 15%;
+    max-width: 15%;
+    height: 15%;
+    max-height: 15%;
+    display: inline-block;
+    padding:2px;
+    overflow: hidden;
+    margin:1px;
+    background-color: #fafafa;
+    border-radius:15%;
 }
 
 .item-action-img{

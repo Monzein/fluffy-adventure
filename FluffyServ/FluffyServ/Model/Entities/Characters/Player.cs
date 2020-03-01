@@ -56,11 +56,13 @@ namespace FluffyServ.Model.Entities.Characters
 
         internal void Extract(Grid g, Resource r)
         {
-            UseEnergy(r.Difficulty);
-            GameItem item = g.GetCell(X, Y).Extract(r);
-            if (!this.Inventory.AddItem(item))
+            if (UseEnergy(r.Difficulty))
             {
-                g.GetCell(X, Y).AddItem(item);
+                GameItem item = g.GetCell(X, Y).Extract(r);
+                if (!this.Inventory.AddItem(item))
+                {
+                    g.GetCell(X, Y).AddItem(item);
+                }
             }
         }
 

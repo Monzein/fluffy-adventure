@@ -139,17 +139,22 @@ function receipesMessage(data) {
     var result = "";
     for (i = 0; i < jobject.length; i++) {
         var item = jobject[i];
-        var itemName = item.Item.Name;
-        result += "<div>" + itemName +
-            " <button class=\"btn btn-small btn-primary\" type=\"button\" onclick=\"onClickCraftItem(\'"
-            + itemName + "\')\">Créer</button> ";
+        result += "<div class=\"receipe-item\">";
+        result += "<img src=\"./images/items/" + item.Item.Picture + ".png\" class=\"receipe-item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+ item.Item.Name + "\"/>";
+        result += item.Item.Name;
+        result += " <button class=\"btn btn-small btn-primary\" type=\"button\" onclick=\"onClickCraftItem(\'"
+            + item.Item.Name + "\')\">Créer</button> ";
         result += "<button class=\"btn btn-small\" type=\"button\" data-toggle=\"collapse\" data-target=\"#ingredients-" +
         i + "\" aria-expanded=\"false\" aria-controls=\"ingredients-" + i + "\">Ingredients</button>";
         result += "<div class=\"collapse\" id=\"ingredients-" + i + "\"><div class=\"card card-body\">";
 
         for(j = 0; j < item.Ingredients.length; j++){
             var ingredient = item.Ingredients[j];
-            result += "<p>" + ingredient.Number + " " + ingredient.Name + "</p>";
+            //result += "<p>" + ingredient.Number + " " + ingredient.Name + "</p>";
+            result += "<div class=\"receipe-ingredient\">"
+            result += "<img src=\"./images/items/" + ingredient.Picture + ".png\" class=\"item-img\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\""+ ingredient.Name + "\"/>";
+            result += "<span class=\"item-number\">" + ingredient.Number + "</span>";
+            result += "</div>";
         }
         result += "</div></div>";
         result += "</div>";

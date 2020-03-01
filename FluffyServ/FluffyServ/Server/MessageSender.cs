@@ -37,7 +37,9 @@ namespace FluffyServ.Server
 
         internal static void MapMessage(ClientSession session, IWebSocketConnection socket, Grid grid)
         {
+            //Cheat version
             //string map = grid.GetViewMapString();
+            //Regular version
             string map = grid.GetViewPlayerMapString(session.SessionPlayer);
             string datas = "{\"width\":" + grid.Width + ",\"height\":" + grid.Height + ",\"map\":" + map + "}";
             ServerMessage messageResult = new ServerMessage(session.Id, "map", datas);
