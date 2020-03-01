@@ -4,6 +4,21 @@ Ceci est un projet personnel pour pratiquer un peu de développement.
 L'objectif est de réaliser un jeu multijoueur sur navigateur. 
 Le jeu utilise une grille avec une île générée aléatoirement.
 
+## Le Jeu
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/FindResources.PNG)
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/MapExploration.PNG)
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Inventory.PNG)
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Crafting.PNG)
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Battle.PNG)
+
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_1.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_2.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_3.PNG)
+
+
 ## FluffyClient
 
 L'interface web est géré par un serveur Node.js.
