@@ -6,18 +6,34 @@ Le jeu utilise une grille avec une île générée aléatoirement.
 
 ## Le Jeu
 
+Le joueur se trouve sur une île déserte.
+
+Il peut se déplacer d'une case en suivant l'une des quatre directions : nord, est, sud, ouest.
+
+L'île est découpée en un quadrillage. Chaque case est dominé d'un terrain qui détermine la difficulté de franchissement. Plus le terrain est difficile, plus il faut d'énergie pour s'y rendre. Une case possède des ressources limitées et dépendant de son terrains. Le joueur peut récolter des ressources moyennant une somme d'énergie selon la ressource.
+
 ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/FindResources.PNG)
+
+Le joueur aperçois sa case et ses alentours. Il peut déplier une carte qui permet de voir toutes les cases découvertes.
 
 ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/MapExploration.PNG)
 
+L'inventaire permet d'utiliser des objets et s'équiper. L'inventaire et limité en masse et espace.
+
 ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Inventory.PNG)
+
+Il est possible de créer des objets à partir de ressources disponible dans l'inventaire.
 
 ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Crafting.PNG)
 
+Un joueur peut se retrouver sur la même case qu'un autre personnage. Il peut alors déclencher un combat. Une fenêtre s'ouvre pour effectuer des actions de combats. Le combat se termine par la mort ou la fuite d'un des personnages.
+Si le combat est lancé contre un autre joueur, la fenêtre s'ouvre pour le second joueur. Le combat prend fin pour les mêmes conditions.
+
 ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/Battle.PNG)
 
-![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_1.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_2.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_3.PNG)
+La carte est générée aléatoirement à partir d'une graine. La même graine donne exactement la même carte. La carte est générée selon le principe de génération par îlots. Voici quelques exemples de générations automatiques.
 
+![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_1.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_2.PNG) ![alt text](https://github.com/Monzein/fluffy-adventure/blob/master/Presentation/GeneratedMap_3.PNG)
 
 ## FluffyClient
 
